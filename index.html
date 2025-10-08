@@ -46,9 +46,8 @@
         await createUserWithEmailAndPassword(auth, email, password);
         await setDoc(doc(db, "users", username), {
           username,
-          saveCode: "", // empty for now
-          version: "",
-          lastDate: 0
+          MSMiS: "",
+          DOFiS: ""
         });
 
         // Auto-login
