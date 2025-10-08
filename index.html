@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Cloud Save</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="Logo_v4.ico" type="image/x-icon"> 
+</head>
+<body>
+  <h2>Welcome to QwertyNavy's awesome cloud storage! This is intended as a way to store your save codes for MSMiS and DOFiS.</h2>
+  <div>
+    <h1>Create Cloud Save</h1>
+
+    <input id="username" placeholder="Enter your Scratch Username (or a different one if you fancy)"><br>
+    <input id="password" placeholder="Enter a UNIQUE Password (aka NOT your Scratch password!)" type="password"><br>
+    <button id="register">Register</button>
+
+    <!-- Error display -->
+    <div id="error" class="error"></div>
+
+    <!-- Navigation link -->
+    <p style="margin-top:15px;">
+      <a href="login.html" class="link">Already have a Cloud Save? Log in</a>
+    </p>
+  </div>
+
+  <script type="module">
+    import { auth, db, createUserWithEmailAndPassword, setDoc, doc, signInWithEmailAndPassword } from "./firebase.js";
+
+    const errorDiv = document.getElementById("error");
+
+    document.getElementById("register").onclick = async () => {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      errorDiv.innerText = "";
+
+      if (!username || !password) {
+        errorDiv.innerText = "Please enter both username and password.";
+        return;
+      }
+
+      try {
+        const email = username + "@maxiroon.xyz";
+
+        // Create account
+        await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, "users", username), {
+          username,
+          saveCode: "", // empty for now
+          version: "",
+          lastDate: 0
+        });
+
+        // Auto-login
+        await signInWithEmailAndPassword(auth, email, password);
+        localStorage.setItem("username", username);
+
+        window.location = "account.html";
+
+      } catch (e) {
+        errorDiv.innerText = e.message;
+      }
+    };
+  </script>
+</body>
+</html>

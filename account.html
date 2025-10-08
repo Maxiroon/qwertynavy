@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Account</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="Logo_v4.ico" type="image/x-icon"> 
+</head>
+<body>
+  <div class="container">
+    <h1>Your Account</h1>
+
+    <!-- Boxes container -->
+    <div class="boxes">
+      <!-- MSMiS box -->
+      <div class="box" id="boxMSMiS">
+        <h2>MSMiS</h2>
+        <div id="infoMSMiS">Loading...</div>
+        <textarea id="saveMSMiS" placeholder="Paste MSMiS save code here, then press update!"></textarea><br>
+        <button id="copyMSMiS" class="copy">Copy</button>
+        <button id="updateMSMiS">Update</button>
+      </div>
+
+      <!-- DOFiS box -->
+      <div class="box" id="boxDOFiS">
+        <h2>DOFiS</h2>
+        <div id="infoDOFiS">Loading...</div>
+        <textarea id="saveDOFiS" placeholder="Paste DOFiS save code here, then press update!"></textarea><br>
+        <button id="copyDOFiS" class="copy">Copy</button>
+        <button id="updateDOFiS">Update</button>
+      </div>
+    </div>
+
+    <button id="logout">Log Out</button>
+
+    <!-- Inline message display -->
+    <div id="message" class="message"></div>
+  </div>
+
+  <script type="module">
+    import { auth, db, doc, getDoc, updateDoc, signOut } from "./firebase.js";
+
+    const username = localStorage.getItem("username");
+    if (!username) window.location = "login.html";
+
+    const userDoc = doc(db, "users", username);
+    const messageDiv = document.getElementById("message");
+
+    function formatMSMiSVersion(raw) {
+      if (raw.length !== 4) return raw;
+      return `v${raw[0]}.${raw[1]}.${raw.slice(2)}`;
+    }
+
+    function formatDOFiSVersion(raw) {
+    // raw example: "0125.03" → X=0, Y=12, Z=5, last ZZ=03
+    if (!raw.includes(".")) return raw;
+
+    const [xx, zz] = raw.split("."); // xx = "0125", zz = "03"
+    if (xx.length < 4) return raw;
+
+    const X = parseInt(xx.slice(0, 2)); // first two digits
+    const Y = xx.slice(2, 4);           // last two digits
+
+    if (X === 0) return `BETA.${Y}.${zz}`;
+    return `v${X}.${Y}.${zz}`;
+}
+
+    function convertDate(days) {
+      const base = new Date("2000-01-01T00:00:00Z");
+      base.setUTCDate(base.getUTCDate() + days);
+      return base.toDateString();
+    }
+
+    function parseMSMiS(save) {
+    const parts = save.split("|");
+    if (parts.length < 2) return { version: "", accountID: "", full: save };
+
+    const version = formatMSMiSVersion(parts[0]);
+
+    let idx = 1;
+    const monsterCount = parseInt(parts[idx]);
+    idx += 1 + monsterCount;
+
+    // Skip currency list (8)
+    idx += 8;
+
+    // Skip colossal list
+    const colossalCount = parseInt(parts[idx]);
+    idx += 1 + colossalCount;
+
+    // Acc list
+    const accCount = parseInt(parts[idx]);
+    idx += 1;
+    const accountID = parts[idx] || "";
+
+    return { version, accountID, full: save };
+}
+
+
+
+    function parseDOFiS(save) {
+      const parts = save.split("»");
+      return {
+        version: parts[0] ? formatDOFiSVersion(parts[0]) : "",
+        lastDate: parts[1] ? parseInt(parts[1]) : 0,
+        accountID: parts[3] || "",
+        full: save
+      };
+    }
+
+    async function loadUser() {
+      try {
+        const snap = await getDoc(userDoc);
+        if (!snap.exists()) {
+          messageDiv.innerText = "User not found.";
+          messageDiv.style.color = "#ff5090";
+          return;
+        }
+
+        const data = snap.data();
+
+        // MSMiS
+        const msm = parseMSMiS(data.MSMiS || "");
+        document.getElementById("infoMSMiS").innerHTML = `
+          <p><b>Version:</b> ${msm.version}</p>
+          <p><b>Save ID:</b> ${msm.accountID}</p>
+        `;
+        document.getElementById("saveMSMiS").value = msm.full;
+
+        // DOFiS
+        const dof = parseDOFiS(data.DOFiS || "");
+        document.getElementById("infoDOFiS").innerHTML = `
+          <p><b>Version:</b> ${dof.version}</p>
+          <p><b>Last Played:</b> ${convertDate(dof.lastDate)}</p>
+          <p><b>Save ID:</b> ${dof.accountID}</p>
+        `;
+        document.getElementById("saveDOFiS").value = dof.full;
+
+      } catch (e) {
+        messageDiv.innerText = e.message;
+        messageDiv.style.color = "#ff5090";
+      }
+    }
+
+    // Copy buttons
+    document.getElementById("copyMSMiS").onclick = () => {
+      navigator.clipboard.writeText(document.getElementById("saveMSMiS").value)
+        .then(() => { messageDiv.innerText="MSMiS save code copied!"; messageDiv.style.color="#8b56a0"; })
+        .catch(e => { messageDiv.innerText=e.message; messageDiv.style.color="#ff5090"; });
+    };
+    document.getElementById("copyDOFiS").onclick = () => {
+      navigator.clipboard.writeText(document.getElementById("saveDOFiS").value)
+        .then(() => { messageDiv.innerText="DOFiS save code copied!"; messageDiv.style.color="#8b56a0"; })
+        .catch(e => { messageDiv.innerText=e.message; messageDiv.style.color="#ff5090"; });
+    };
+
+    // Update buttons
+    document.getElementById("updateMSMiS").onclick = async () => {
+      const code = document.getElementById("saveMSMiS").value.trim();
+      if (!code) { messageDiv.innerText="Paste MSMiS code"; messageDiv.style.color="#ff5090"; return; }
+      try { await updateDoc(userDoc, { MSMiS: code }); messageDiv.innerText="MSMiS save code updated!"; messageDiv.style.color="#8b56a0"; loadUser(); }
+      catch(e){ messageDiv.innerText=e.message; messageDiv.style.color="#ff5090"; }
+    };
+    document.getElementById("updateDOFiS").onclick = async () => {
+      const code = document.getElementById("saveDOFiS").value.trim();
+      if (!code) { messageDiv.innerText="Paste DOFiS code"; messageDiv.style.color="#ff5090"; return; }
+      try { await updateDoc(userDoc, { DOFiS: code }); messageDiv.innerText="DOFiS save code updated!"; messageDiv.style.color="#8b56a0"; loadUser(); }
+      catch(e){ messageDiv.innerText=e.message; messageDiv.style.color="#ff5090"; }
+    };
+
+    // Logout
+    document.getElementById("logout").onclick = async () => {
+      await signOut(auth);
+      localStorage.clear();
+      window.location = "login.html";
+    };
+
+    loadUser();
+  </script>
+</body>
+</html>

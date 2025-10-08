@@ -1,0 +1,209 @@
+/* Global reset & font */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #877aad;
+    color: #333;
+}
+
+/* Center everything vertically & horizontally */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Card container for content */
+body > div, body > *:not(script) {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+/* Headings */
+h1 {
+    color: #8b56a0;
+    margin-bottom: 20px;
+}
+
+/* Inputs and textarea */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 2px solid #be7be7;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, textarea:focus {
+    border-color: #8877f8;
+    box-shadow: 0 0 5px rgba(136, 119, 248, 0.5);
+    outline: none;
+}
+
+/* Buttons - unified style */
+button {
+    display: inline-block;
+    background: linear-gradient(45deg, #ff5090, #fa99ec);
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    margin: 5px 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: transform 0.1s, box-shadow 0.2s, background 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background: linear-gradient(45deg, #8877f8, #be7be7);
+}
+
+/* Small buttons (like Copy) */
+button.copy {
+    padding: 6px 12px;
+    font-size: 0.9em;
+    vertical-align: middle;
+}
+
+/* Info boxes */
+#info {
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#accountID {
+    display: inline-block;
+    background: #fa99ec;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 10px;
+}
+
+#saveCodeDisplay {
+    display: block;
+    background: #f8f0f8;
+    border: 2px solid #be7be7;
+    padding: 10px;
+    border-radius: 8px;
+    font-family: monospace;
+    word-break: break-all;
+    margin: 10px 0;
+}
+
+/* Update textarea */
+#newSave {
+    font-family: monospace;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em;
+    }
+    button {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+    button.copy {
+        width: auto;
+    }
+}
+
+.link {
+    color: #8b56a0;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: #8877f8;
+}
+
+.error {
+    color: #ff5090;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.boxes {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.box {
+    background: #fafafa;
+    border: 2px solid #be7be7;
+    border-radius: 12px;
+    padding: 15px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.box h2 {
+    margin-top: 0;
+}
+
+textarea {
+    width: 100%;
+    min-height: 80px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #8b56a0;
+    border-radius: 8px;
+    padding: 8px;
+    resize: vertical;
+}
+
+button.copy, button {
+    margin: 5px 5px 5px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(45deg, #8b56a0, #8877f8);
+    color: white;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+button.copy:hover, button:hover {
+    background: linear-gradient(45deg, #ff5090, #fa99ec);
+}
+
+.message {
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+}
