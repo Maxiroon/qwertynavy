@@ -1,20 +1,20 @@
 // firebase.js
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteField
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-import {
-  getFirestore,
-  doc,
-  setDoc,
-  getDoc,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
-// 🔧 Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyB6WttCaUoRmUUUbuPwNxdE5cswyJw-cmE",
   authDomain: "qwertynavyscratch.firebaseapp.com",
@@ -25,12 +25,22 @@ const firebaseConfig = {
   measurementId: "G-Q2VBRMZC6K"
 };
 
-// Initialize
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+
 const db = getFirestore(app);
 
+const auth = getAuth(app);
 
-// Export for use
-export { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, doc, setDoc, getDoc, updateDoc };
-
+export {
+  app,
+  db,
+  auth,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+  deleteField,
+  signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+};
