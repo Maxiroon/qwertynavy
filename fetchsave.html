@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="module">
+import { auth, signInWithEmailAndPassword, db } from "./firebase.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const params = new URLSearchParams(window.location.search);
+
+const username = params.get("username");
+const password = params.get("password");
+const game = params.get("game"); // MSMiS or DOFiS
+
+if(!username || !password){
+  document.body.innerText = "ERROR: Missing login";
+  throw "";
+}
+
+const email = username + "@maxiroon.xyz";
+
+try {
+
+  await signInWithEmailAndPassword(auth, email, password);
+
+  const ref = doc(db,"users",username);
+  const snap = await getDoc(ref);
+
+  if(!snap.exists()){
+    document.body.innerText = "ERROR: user not found";
+    throw "";
+  }
+
+  const data = snap.data();
+
+  if(game === "MSMiS"){
+    document.body.innerText = data.msSave || "";
+  }
+  else if(game === "DOFiS"){
+    document.body.innerText = data.doSave || "";
+  }
+  else{
+    document.body.innerText = "ERROR: unknown game";
+  }
+
+}
+catch(e){
+  document.body.innerText = "ERROR: login failed";
+}
+</script>
+</body>
+</html>
