@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Log In</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="Logo_v4.ico" type="image/x-icon"> 
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/Logo_v4.ico" type="image/x-icon"> 
 </head>
+
 <body>
-    <h2>Welcome to QwertyNavy's awesome cloud storage! This is intended as a way to store your save codes for MSMiS and DOFiS.</h2>
   <div>
     <h1>Log In</h1>
 
@@ -20,12 +20,13 @@
 
     <!-- Navigation link -->
     <p style="margin-top:15px;">
-      <a href="index.html" class="link">Don't have a Cloud Save? Sign up</a>
+      <a href="../signup/" class="link">Don't have a Cloud Save? Sign up</a>
     </p>
+    <a href="/"><img style="width: 33px;" src="/home.webp"></a>
   </div>
 
   <script type="module">
-    import { auth, signInWithEmailAndPassword } from "./firebase.js";
+    import { auth, signInWithEmailAndPassword } from "/firebase.js";
 
     const errorDiv = document.getElementById("error");
 
@@ -44,7 +45,14 @@
       try {
         await signInWithEmailAndPassword(auth, email, password);
         localStorage.setItem("username", username);
-        window.location = "account.html";
+        const params = new URLSearchParams(window.location.search);
+const method = params.get("method");
+
+if (method === "Scratch") {
+  window.location = "scratchlogin.html";
+} else {
+  window.location = "/account";
+}
       } catch (e) {
         errorDiv.innerText = e.message;
       }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <title>Account</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="Logo_v4.ico" type="image/x-icon"> 
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/Logo_v4.ico" type="image/x-icon"> 
 </head>
 <body>
   <div class="container">
@@ -18,7 +18,7 @@
         <div id="infoMSMiS">Loading...</div>
         <textarea id="saveMSMiS" placeholder="Paste MSMiS save code here, then press update!"></textarea><br>
         <button id="copyMSMiS" class="copy">Copy</button>
-        <button id="updateMSMiS">Update</button>
+        <button id="updateMSMiS" class="copy">Update</button>
       </div>
 
       <!-- DOFiS box -->
@@ -27,21 +27,22 @@
         <div id="infoDOFiS">Loading...</div>
         <textarea id="saveDOFiS" placeholder="Paste DOFiS save code here, then press update!"></textarea><br>
         <button id="copyDOFiS" class="copy">Copy</button>
-        <button id="updateDOFiS">Update</button>
+        <button id="updateDOFiS" class="copy">Update</button>
       </div>
     </div>
 
     <button id="logout">Log Out</button>
-
     <!-- Inline message display -->
     <div id="message" class="message"></div>
+
+    <a href="/"><img style="width: 33px;" src="/home.webp"></a>
   </div>
 
   <script type="module">
-    import { auth, db, doc, getDoc, updateDoc, signOut } from "./firebase.js";
+    import { auth, db, doc, getDoc, updateDoc, signOut } from "/firebase.js";
 
     const username = localStorage.getItem("username");
-    if (!username) window.location = "login.html";
+    if (!username) window.location = "./login";
 
     const userDoc = doc(db, "users", username);
     const messageDiv = document.getElementById("message");
@@ -123,6 +124,7 @@
         const msm = parseMSMiS(data.MSMiS || "");
         document.getElementById("infoMSMiS").innerHTML = `
           <p><b>Version:</b> ${msm.version}</p>
+          <p><b>Last Played:</b> Not provided.</p>
           <p><b>Save ID:</b> ${msm.accountID}</p>
         `;
         document.getElementById("saveMSMiS").value = msm.full;
@@ -172,7 +174,7 @@
     document.getElementById("logout").onclick = async () => {
       await signOut(auth);
       localStorage.clear();
-      window.location = "login.html";
+      window.location = "./login";
     };
 
     loadUser();

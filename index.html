@@ -1,65 +1,189 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Create Cloud Save</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="Logo_v4.ico" type="image/x-icon"> 
+  <meta charset="UTF-8" />
+  <title>Account</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="icon" href="/Logo_v4.ico" type="image/x-icon"> 
 </head>
+
+<style>
+    .box {
+        width:75%; margin: 20px 12.5%; border-radius: 25px; padding: 5px;
+    }
+    .box h1,h3 {
+        margin: 0px;
+    }
+    .box h1,h3,p {
+        padding: 0px 50px;
+    }
+    body {
+    justify-content:start;
+    margin: 50px 0px;
+    }
+    img {
+    position: fixed;
+    top: 25;
+    right: 25;
+    background: #fff;
+    border-radius: 20px;
+    width: 250px;
+    padding: 5px 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+</style>
+
+<a href="/account/" style="background: none; box-shadow: none;"><img src="CloudSave.webp"></a>
+
 <body>
-  <h2>Welcome to QwertyNavy's awesome cloud storage! This is intended as a way to store your save codes for MSMiS and DOFiS.</h2>
-  <div>
-    <h1>Create Cloud Save</h1>
-
-    <input id="username" placeholder="Enter your Scratch Username (or a different one if you fancy)"><br>
-    <input id="password" placeholder="Enter a UNIQUE Password (aka NOT your Scratch password!)" type="password"><br>
-    <button id="register">Register</button>
-
-    <!-- Error display -->
-    <div id="error" class="error"></div>
-
-    <!-- Navigation link -->
-    <p style="margin-top:15px;">
-      <a href="login.html" class="link">Already have a Cloud Save? Log in</a>
-    </p>
-  </div>
-
-  <script type="module">
-    import { auth, db, createUserWithEmailAndPassword, setDoc, doc, signInWithEmailAndPassword } from "./firebase.js";
-
-    const errorDiv = document.getElementById("error");
-
-    document.getElementById("register").onclick = async () => {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      errorDiv.innerText = "";
-
-      if (!username || !password) {
-        errorDiv.innerText = "Please enter both username and password.";
-        return;
-      }
-
-      try {
-        const email = username + "@maxiroon.xyz";
-
-        // Create account
-        await createUserWithEmailAndPassword(auth, email, password);
-        await setDoc(doc(db, "users", username), {
-          username,
-          MSMiS: "",
-          DOFiS: ""
-        });
-
-        // Auto-login
-        await signInWithEmailAndPassword(auth, email, password);
-        localStorage.setItem("username", username);
-
-        window.location = "account.html";
-
-      } catch (e) {
-        errorDiv.innerText = e.message;
-      }
-    };
-  </script>
+    <div style="width: 75%;">   
+        <h1 style="font-size: 50px; margin-bottom: 0px;">QwertyNavy</h1>
+        <p style="font-size: 25px;">Welcome to the QwertyNavy website! This houses patch notes for MSMiS, as well as a place for you to store your MSMiS and DOFiS save codes!</p>
+    </div>
+    <div style="width: 75%;">   
+        <h1 style="font-size: 50px; margin-bottom: -50px;">My Singing Monsters in Scratch Version History</h1>
+        <br><br><br>
+        <div class="box">
+            <h1>Version 3.2.3</h1>
+            <h3>4 Mar, 2026</h3>
+            <p>
+                5 New Wublins: Whajje, Blipsqueak, Creepuscule, Scargo, and Pixolotl<br>
+                Major improvements to Wublins
+            </p>
+        </div>
+        <div class="box">
+            <h1>Version 3.2.2</h1>
+            <h3>23 Feb, 2026</h3>
+            <p>
+                5 New Wublins: Zuuker, Screemu, Dermit, Tympa, and Gheegur
+            </p>
+        </div>
+        <div class="box">
+            <h1>Version 3.2.1</h1>
+            <h3>5 Feb, 2026</h3>
+            <p>
+                Season of Love: Schmoochle and costumes available for a limited time!
+            </p>
+            <div class="box">
+                <h3>3.2.1a - 7 Jan</h3>
+                <p>Fixed an issue where Rare monsters could not be bred in the Breeding Structure</p>
+            </div>
+        </div>
+        <div class="box">
+            <h1>Version 3.2.0</h1>
+            <h3>2 Jan, 2026</h3>
+            <p>
+                <b>Update highlight: Wublin Island!</b> Discover the Wubbox's creations by zapping eggs from the natural islands! But be careful! You only have a LIMITED TIME to fill them up. The time limit is based in REAL TIME and will progress even when you are not playing.
+                <br><b>Wublin Island:</b> Added the first 5 Wublins to collect!
+                <br><b>Bug fixes:</b>
+                <br>Fixed a bug where you could drag the level counter
+            </p>
+        </div>
+        <div class="box">
+            <h1>Version 3.1.1</h1>
+            <h3>11 Jan, 2026</h3>
+            <p>
+                Balancing to goal rewards
+                <br>Balancing to starpower rewards
+                <br>Fixed a softlock in the Spinwheel
+                
+            </p>
+            <div class="box">
+                <h3>3.1.1a - 31 Jan</h3>
+                <p>Disabled Spinwheel while bugs are looked into.</p>
+            </div>
+        </div>
+        <div class="box">
+            <h1>Version 3.1.0</h1>
+            <h3>1 Jan, 2026</h3>
+            </p><b>Update highlight: Mirror Islands!</b> Rediscover the natural islands in a remixed song!
+            <br><b>Mirror Islands:</b>
+            <br>Added Mirror Plant, Cold, Air, Water, and Earth. Unlocked after purchasing Earth Island
+            <br>Added 5 goals for each island
+            <br><b>Bug fixes:</b>
+            <br>Fixed an issue where the market would only display Mammott and Noggin
+            <br>Fixed an issue where Diamond Codes could not be redeemed
+            <br>Fixed an issue where the HUD would be the wrong size sometimes
+        </div>
+        <div class="box">
+            <h1>Version 3.0.3</h1>
+            <h3>29 Dec, 2025</h3>
+            <p>
+            Fixed Gold Island's collection book
+            <br>Fixed eggs not displaying the correct monster when pressed
+            <br>Fixed Clear Breeding and Clear Nursery
+            <br>Added a goal for hatching bbli$zard
+            </p>
+        </div>
+        <div class="box">
+            <h1>Version 3.0.2</h1>
+            <h3>22 Dec, 2025</h3>
+            <p>
+                <br>Added bbli$zard
+                <br>Fixed an issue where Tutorial arrow would appear even if tutorial was skipped
+                <br>Quality of life: Save menu will appear if project is stopped.
+            </p>
+            <div class="box">
+                <h3>3.0.2a - 23 Dec</h3>
+                <p>Fixed rendering issues with structures and achievements</p>
+            </div>
+        </div>
+        <div class="box">
+            <h1>Version 3.0.1</h1>
+            <h3>7 Dec, 2025</h3>
+            <p>
+                Tutorial overhaul
+            </p>
+            <div class="box">
+                <h3>3.0.1a - 7 Dec</h3>
+                <p>Fixed an issue where the tutorial arrow would not appear</p>
+            </div>
+        </div>
+        <div class="box" style="width: 100%; margin:0px;">
+            <h1>Version 3.0.0</h1>
+            <h3>6 Dec, 2025</h3>
+            <p>
+                <b>Update highlight: Collect the 30 naturals as they perform a new song: Tribal Island!</b> It's up to you to keep your Monster well-fed to raise the Tribal Level, earn Starpower, and redeem Tribal Rewards. You may even unlock an ancient secret of the Monster World!
+                <br><b>NEW Island:</b> Tribal Island! Unlock a new song for the naturals and an ancient secret!
+                <br><b>NEW monsters:</b>
+                <br>Werdos: Available on Water and Earth Islands!
+                <br>Dipsters: Available on Water and Earth Islands!
+                <br>Mysterious Monster: Available at level 100 on Tribal Island!
+                <br><b>8 NEW Goals:</b>
+                <br>Hatch and place the mythicals (5)
+                <br>Purchase Tribal Island
+                <br>Reach level milestones on Tribal Island (2)
+                <br><b>Quality of Life:</b>
+                <br>HUD elements will now fade in/out
+                <br>Improvements to Text, SFX, and notification systems
+                <br>notifications now appear in a menu instead of text at the bottom
+                <br>Improvements to Main Menu
+                <br>Improvements to Saving and Loading game (v2 save codes will work in v3!)
+                <br>Improvements to Tutorial
+                <br>Overhaul of breeding calculations
+                <br>Added element icons to ethereals in the Market
+                <br>Bonus currency will no longer give Market Vouchers.
+                <br>Some code cleanup and comments (to help out if you want to remix!)
+                <br>Six new costumes for Shrubb, Rare Congle, Grumpyre, Maggpi, Mysterious Monster, and Strombonin
+                <br><b>Bug Fixes:</b>
+                <br>Fixes to bonus currency
+                <br>Fixed more issues with monsters not playing in proper places
+                <br>Many smaller bug fixes
+                <br>New "Fix currencies" debug option if you have negative of a currency.
+            </p>
+            <div class="box">
+                <h3>3.0.0a - 6 Dec</h3>
+                <p>Fixed an issue where feeding monsters would cause negative of the currency used</p>
+            </div>
+            <div class="box">
+                <h3>3.0.0b - 6 Dec</h3>
+                <p>Fixed an issue where achievements would not grant their reward</p>
+            </div>
+            <div class="box">
+                <h3>3.0.0c - 6 Dec</h3>
+                <p>Fixed issue with monster level appearing improperly</p>
+            </div>
+        </div>
+        <br>
+        <a href="https://sites.google.com/view/qwertynavy/msmis/" class="link">Click here to read earlier patch notes</a>
+    </div>
 </body>
-</html>
