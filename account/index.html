@@ -8,7 +8,8 @@
 </head>
 <body>
   <div class="container">
-    <h1>Your CloudSave Account</h1>
+    <h3 id="welcome" style="margin-bottom: 0px;"></h3>
+    <h1 style="margin-top: -10px;">Your CloudSave Account</h1>
 
     <!-- Boxes container -->
     <div class="boxes">
@@ -43,6 +44,8 @@
 
     const username = localStorage.getItem("username");
     if (!username) window.location = "./login";
+    const welcomeText = document.getElementById("welcome");
+    document.getElementById("welcome").innerText = `Welcome, ${username}!`;
 
     const userDoc = doc(db, "users", username);
     const messageDiv = document.getElementById("message");
