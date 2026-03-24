@@ -19,11 +19,10 @@
     body {
     justify-content:start;
     margin: 50px 0px;
+    margin-top: -50px;
     }
     img {
     position: fixed;
-    top: 25;
-    right: 25;
     background: #fff;
     border-radius: 20px;
     width: 250px;
@@ -32,8 +31,8 @@
     }
 </style>
 
-<a href="/account/" style="background: none; box-shadow: none;"><img src="CloudSave.webp"></a>
-
+<a href="/account/" style="background: none; box-shadow: none; "><img src="CloudSave.webp" style="top:25; right:25;"></a>
+<a href="/br/" style="background: none; box-shadow: none; "><img src="BugReport.webp" style="top:100; right:25;"></a>
 <body>
     <div style="width: 75%;">   
         <h1 style="font-size: 50px; margin-bottom: 0px;">QwertyNavy</h1>
@@ -42,14 +41,39 @@
     <div style="width: 75%;">   
         <h1 style="font-size: 50px; margin-bottom: -50px;">My Singing Monsters in Scratch Version History</h1>
         <br><br><br>
-        <!-- <div class="box" style="width: 90%; margin:0 5%;" id="3300">
-            <h1>Version 3.3.0</h1>
-            <h3>8 Mar, 2026</h3>
+        <!-- <div class="box" style="width: 100%; margin:0px;" id="4000">
+            <h1>Version 4.0.0</h1>
+            <h3>Apr 1, 2026</h3>
             <p>
-                <b>Update highlight: General Improvements!</b> 3.3.x updates will focus on improving the game, starting with logging in!<br>
-                <b>System overhaul: Account system!</b><br>
+                <b>Update highlight: Menu overhauls!</b> 4.0 brings many updates across all menus of the game!<br>
+                <b>Main Menu</b><br>
+                You can now "Sign Out" in the Save menu. New Game and Load Game now have submenus:<br>
                 New Game now has two options: "New Game," which starts a new game normally, or "New Game+," which starts you with infinite currency.<br>
-                4 New Wublins: Bona Petite, Astropod, Maulch, and Fleechworm
+                Load game now has "Save Code" and "Local Data." Local data will load any save that was loaded before. Sort of like an autosave. So, pressing the green flag will no longer erase any progress.<br>
+                <b>Bakery</b><br>
+                Baking will now advance in real time instead of project time.<br>
+                <b>Market</b><br>
+                New filters have been added for element count.<br>
+                Adjustments to obtaining Starpower<br>
+                <b>Map</b><br>
+                The HUD will now dissapear when the Loading screen is active.<br>
+                The loading screen has been changed to the loading bar present in the official game.<br>
+                Island load times are no longer instant and depend on the amount of monsters on said island.<br>
+                <b>Goals Menu:</b><br>
+                Purchase Wublin Island<br>
+                Wake up Wublins (1, 10)<br>
+                <b>Book of Monsters:</b><br>
+                Each island is now seperated into Common and Rare sections<br>
+                <b>Overhauled menus to match the original game:</b><br>
+                Market, Mailbox, Goals, Bakery, Options<br>
+                <b>Quality of Life and bug fixes:</b><br>
+                Breeding and Nursing eggs will now advance in real time instead of project time.<br>
+                New sound effects for Next/Previous buttons.<br>
+                Changed sound effects for menus that are windowed.<br>
+                More code cleanup for better readability <br>
+                Small improvements to HUD elements to improve on load times<br>
+                Currencies will display an infinity symbol if they are over 9 digits.<br>
+                Fixed monsters layering incorrectly when in front of structures.
             </p>
         </div> -->
         <div class="box" id="3230">
@@ -59,6 +83,10 @@
                 5 New Wublins: Whajje, Blipsqueak, Creepuscule, Scargo, and Pixolotl<br>
                 Major improvements to Wublins
             </p>
+            <div class="box">
+                <h3>3.2.3a - 10 Mar</h3>
+                <p>Small tweaks to who is and isn't allowed to breed on a certain island</p>
+            </div>
         </div>
         <div class="box" id="3220">
             <h1>Version 3.2.2</h1>
@@ -74,7 +102,7 @@
                 Season of Love: Schmoochle and costumes available for a limited time!
             </p>
             <div class="box">
-                <h3>3.2.1a - 7 Jan</h3>
+                <h3>3.2.1a - 7 Feb</h3>
                 <p>Fixed an issue where Rare monsters could not be bred in the Breeding Structure</p>
             </div>
         </div>
@@ -137,8 +165,8 @@
                 <p>Fixed rendering issues with structures and achievements</p>
             </div>
         </div>
-        <div class="box">
-            <h1>Version 3.0.1 id="3010"</h1>
+        <div class="box" id="3010">
+            <h1>Version 3.0.1 </h1>
             <h3>7 Dec, 2025</h3>
             <p>
                 Tutorial overhaul

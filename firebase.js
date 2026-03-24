@@ -6,7 +6,9 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-  deleteField
+  deleteField,
+  collection,
+  addDoc
 } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
 import {
   getAuth,
@@ -40,6 +42,8 @@ export {
   setDoc,
   updateDoc,
   deleteField,
+  collection,
+  addDoc,
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword

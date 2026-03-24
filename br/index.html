@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report a Bug</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div>
+    <h1>Report a Bug</h1>
+
+    <!-- Game selection -->
+    <select id="game">
+      <option value="">Choose a game...</option>
+      <option value="MSMiS">My Singing Monsters in Scratch</option>
+      <option value="DOFiS">Dawn of Fire in Scratch</option>
+    </select><br>
+
+    <!-- Description -->
+    <textarea id="description" placeholder="Please describe the bug..." style="width:75%"></textarea><br>
+
+    <button id="submit">Submit Report</button>
+
+    <!-- Message -->
+    <div id="message" class="message"></div>
+
+    <a href="/"><img style="width: 33px;" src="/home.webp"></a>
+  </div>
+
+  <script type="module">
+    import { db, collection, addDoc } from "/firebase.js";
+
+    const messageDiv = document.getElementById("message");
+
+    document.getElementById("submit").onclick = async () => {
+      const game = document.getElementById("game").value;
+      const description = document.getElementById("description").value.trim();
+
+      messageDiv.innerText = "";
+
+      if (!game) {
+        messageDiv.innerText = "Please choose a game.";
+        messageDiv.style.color = "#ff5090";
+        return;
+      }
+
+      if (!description) {
+        messageDiv.innerText = "Please describe the bug.";
+        messageDiv.style.color = "#ff5090";
+        return;
+      }
+
+      try {
+        await addDoc(collection(db, "bugReports"), {
+          game: game,
+          description: description,
+          username: localStorage.getItem("username") || "anonymous",
+          timestamp: Date.now()
+        });
+
+        messageDiv.innerText = "Bug report submitted!";
+        messageDiv.style.color = "#8b56a0";
+
+        // Clear form
+        document.getElementById("game").value = "";
+        document.getElementById("description").value = "";
+
+      } catch (e) {
+        messageDiv.innerText = e.message;
+        messageDiv.style.color = "#ff5090";
+        console.error(e);
+      }
+    };
+  </script>
+</body>
+</html>

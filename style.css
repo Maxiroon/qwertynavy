@@ -198,3 +198,40 @@ button.copy:hover, button:hover {
     font-weight: bold;
     text-align: center;
 }
+
+select {
+    width: 25%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 2px solid #be7be7;
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+    background: #ffffff;
+    color: #333;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%238b56a0' viewBox='0 0 16 16'%3E%3Cpath d='M1.5 5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+}
+
+select:focus {
+    border-color: #8877f8;
+    box-shadow: 0 0 5px rgba(136, 119, 248, 0.5);
+    outline: none;
+}
+
+select:hover {
+    border-color: #8b56a0;
+}
+
+select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
