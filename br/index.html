@@ -30,6 +30,13 @@
   <script type="module">
     import { db, collection, addDoc } from "/firebase.js";
 
+    
+
+      const username = localStorage.getItem("username");
+
+      if (!username) {
+        window.location = "/account/login";
+      }
     const messageDiv = document.getElementById("message");
 
     document.getElementById("submit").onclick = async () => {
@@ -48,12 +55,6 @@
         messageDiv.innerText = "Please describe the bug.";
         messageDiv.style.color = "#ff5090";
         return;
-      }
-
-      const username = localStorage.getItem("username");
-
-      if (!username) {
-        window.location = "/account/login.html";
       }
 
       try {
