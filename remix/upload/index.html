@@ -12,10 +12,8 @@
     
  <div>
     <h1>Upload a Remix</h1>
-        <textarea id="codeInput" placeholder="Paste your code here..."></textarea>
-
         <select id="islandSelect">
-            <option value="">Select Island</option>
+            <option value="">Select an Island...</option>
             <option value="plant">Plant Island</option>
             <option value="cold">Cold Island</option>
             <option value="air">Fire Haven</option>
@@ -33,13 +31,16 @@
             <option value="air">Paironormal Carnival</option>
             <option value="air">The Clubbox</option>
 
-        </select>
+        </select><br>
+
+        
+        <textarea id="codeInput" placeholder="Paste your code here..." style="width:75%"></textarea>
 
         <br>
-        <button onclick="uploadCode()">Upload</button><br><br>
+        <button onclick="uploadCode()">Upload</button><br>
+        <div id="message" class="message"></div>
         <a href="../"><img style="width: 33px;" src="/home.webp"></a>
 
-        <div id="message"></div>
 </div>
 
 
@@ -73,12 +74,19 @@ const db = getFirestore(app);
 window.uploadCode = async function () {
     const code = document.getElementById("codeInput").value.trim();
     const island = document.getElementById("islandSelect").value;
-    const msg = document.getElementById("message");
+    const messageDiv = document.getElementById("message");
 
-    if (!code || !island) {
-        msg.textContent = "Fill everything!";
+    if (!code) {
+        messageDiv.innerText = "Please paste a code.";
+        messageDiv.style.color = "#ff5090";
         return;
-    }
+      }
+      if (!island) {
+        messageDiv.innerText = "Please choose an island.";
+        messageDiv.style.color = "#ff5090";
+        return;
+      }
+
 
     try {
         await addDoc(collection(db, "SharedCodes"), {

@@ -116,7 +116,7 @@ async function loadCodes() {
         div.className = "box";
 
         div.innerHTML = `
-            <img src="icons/${data.island}.png" onclick="setFilter('plant')" class="islandIcon" style="width: 75px;">
+            <img src="icons/${data.island}.png" style="width: 75px;">
             <p><b>Uploaded by</b> ${data.username}</p>
             <div id="saveCodeDisplay">${data.code}</div>
             <button onclick="copyCode(\`${data.code}\`)">Copy</button>
