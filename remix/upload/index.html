@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Upload Remix</title>
+
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="/Logo_v4.ico" type="image/x-icon">
+</head>
+
+<body>
+    
+ <div>
+    <h1>Upload a Remix</h1>
+        <textarea id="codeInput" placeholder="Paste your code here..."></textarea>
+
+        <select id="islandSelect">
+            <option value="">Select Island</option>
+            <option value="plant">Plant Island</option>
+            <option value="cold">Cold Island</option>
+            <option value="air">Fire Haven</option>
+            <option value="air">Bone Island</option>
+            <option value="air">Faerie Island</option>
+            <option value="air">Bone Island</option>
+            <option value="air">Light Island</option>
+            <option value="air">Magical Sanctum</option>
+            <option value="air">Mythical Island</option>
+            <option value="air">Ethereal Workshop</option>
+            <option value="air">Magical Nexus</option>
+            <option value="air">Plasma Islet</option>
+            <option value="air">Mech Islet</option>
+            <option value="air">Shadow Islet</option>
+            <option value="air">Paironormal Carnival</option>
+            <option value="air">The Clubbox</option>
+
+        </select>
+
+        <br>
+        <button onclick="uploadCode()">Upload</button><br><br>
+        <a href="../"><img style="width: 33px;" src="/home.webp"></a>
+
+        <div id="message"></div>
+</div>
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    addDoc
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+/* Firebase */
+const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "qwertynavyscratch.firebaseapp.com",
+  projectId: "qwertynavyscratch",
+  appId: "1:979181533083:web:93206f756795ef5096133e"
+};
+
+const username = localStorage.getItem("username");
+
+      if (!username) {
+        window.location = "/account/login";
+      }
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* Upload */
+window.uploadCode = async function () {
+    const code = document.getElementById("codeInput").value.trim();
+    const island = document.getElementById("islandSelect").value;
+    const msg = document.getElementById("message");
+
+    if (!code || !island) {
+        msg.textContent = "Fill everything!";
+        return;
+    }
+
+    try {
+        await addDoc(collection(db, "SharedCodes"), {
+            code,
+            island,
+            username: localStorage.getItem("username") || "Anonymous",
+            timestamp: Date.now()
+        });
+
+        msg.textContent = "Uploaded!";
+    } catch (err) {
+        console.error(err);
+        msg.textContent = "Error uploading.";
+    }
+};
+</script>
+
+</body>
+</html>

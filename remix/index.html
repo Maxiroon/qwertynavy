@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Remix Hub</title>
+
+<link rel="stylesheet" href="/style.css">
+<link rel="icon" href="/Logo_v4.ico" type="image/x-icon">
+</head>
+
+<style>
+.islandIcon {
+    width: 60px;
+    height: auto;
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+
+.islandIcon:hover {
+    transform: scale(1.1);
+}
+
+.islandIcon.active {
+    border: 2px solid #8b56a0;
+}
+
+.box {
+    flex: 0 0 3;
+}
+</style>
+
+<body>
+
+<div>
+    <h1>Remix Hub</h1>
+    <a href="/"><img style="width: 40px;" src="/home.webp"></a>
+    <a href="./upload"><img style="width: 40px;" src="/upload.webp"></a><br><br>
+    <div style="display:flex; justify-content:center; gap:15px; align-items:center; flex-wrap:wrap;">
+        <div id="islandFilters" style="display:flex; gap:10px;">
+            <img src="icons/all.png" onclick="setFilter('all')" class="islandIcon active">
+            <img src="icons/plant.png" onclick="setFilter('plant')" class="islandIcon">
+            <img src="icons/cold.png" onclick="setFilter('cold')" class="islandIcon">
+            <img src="icons/haven.png" onclick="setFilter('haven')" class="islandIcon">
+            <img src="icons/faerie.png" onclick="setFilter('faerie')" class="islandIcon">
+            <img src="icons/bone.png" onclick="setFilter('bone')" class="islandIcon">
+            <img src="icons/light.png" onclick="setFilter('light')" class="islandIcon">
+            <img src="icons/sanctum.png" onclick="setFilter('sanctum')" class="islandIcon">
+            <img src="icons/mythical.png" onclick="setFilter('mythical')" class="islandIcon">
+            <img src="icons/workshop.png" onclick="setFilter('workshop')" class="islandIcon">
+            <img src="icons/nexus.png" onclick="setFilter('nexus')" class="islandIcon">
+            <img src="icons/plasma.png" onclick="setFilter('plasma')" class="islandIcon">
+            <img src="icons/mech.png" onclick="setFilter('mech')" class="islandIcon">
+            <img src="icons/shadow.png" onclick="setFilter('shadow')" class="islandIcon">
+            <img src="icons/paironormal.png" onclick="setFilter('paironormal')" class="islandIcon">
+            <img src="icons/clubbox.png" onclick="setFilter('clubbox')" class="islandIcon">
+
+        </div>
+    </div>
+
+    <!-- Codes -->
+        <h2>Remixer Codes</h2>
+        <div id="codesContainer" style="display: flex; justify-content: center; margin: 5px; gap: 10px; flex-wrap: wrap;"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+/* Firebase */
+const firebaseConfig = {
+  apiKey: "AIzaSyB6WttCaUoRmUUUbuPwNxdE5cswyJw-cmE",
+  authDomain: "qwertynavyscratch.firebaseapp.com",
+  projectId: "qwertynavyscratch",
+  appId: "1:979181533083:web:93206f756795ef5096133e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* Filter state */
+let currentFilter = "all";
+
+window.setFilter = function(filter) {
+    currentFilter = filter;
+
+    document.querySelectorAll(".islandIcon").forEach(el => el.classList.remove("active"));
+    event.target.classList.add("active");
+
+    loadCodes();
+};
+
+/* Load Codes */
+async function loadCodes() {
+    const container = document.getElementById("codesContainer");
+    container.innerHTML = "Loading...";
+
+    const snapshot = await getDocs(collection(db, "SharedCodes"));
+
+    let codes = [];
+    snapshot.forEach(doc => codes.push(doc.data()));
+
+    codes.sort((a, b) => b.timestamp - a.timestamp);
+
+    container.innerHTML = "";
+
+    codes.forEach(data => {
+        if (currentFilter !== "all" && data.island !== currentFilter) return;
+
+        const div = document.createElement("div");
+        div.className = "box";
+
+        div.innerHTML = `
+            <img src="icons/${data.island}.png" onclick="setFilter('plant')" class="islandIcon" style="width: 75px;">
+            <p><b>Uploaded by</b> ${data.username}</p>
+            <div id="saveCodeDisplay">${data.code}</div>
+            <button onclick="copyCode(\`${data.code}\`)">Copy</button>
+            <button onclick="openIsland('${data.island}')">Open Project</button>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+/* Copy */
+window.copyCode = function(code) {
+    navigator.clipboard.writeText(code);
+    alert("Copied!");
+};
+
+/* Open */
+window.openIsland = function(island) {
+    const links = {
+        plant: "706572114",
+        cold: "843533580",
+        air: "1064886252",
+        haven: "1080658767",
+        faerie: "1099145779",
+        bone: "1100875449",
+        light: "1110995188",
+        sanctum: "1114627973",
+        mythical: "1114627973",
+        workshop: "1114627973",
+        nexus: "1114627973",
+        plasma: "1114627973",
+        mech: "1190291422",
+        shadow: "1254376205",
+        paironormal: "1223918545",
+        clubbox: "1283847197"
+    };
+
+    window.open("https://scratch.mit.edu/projects/" + links[island], "_blank");
+};
+
+loadCodes();
+</script>
+
+</body>
+</html>

@@ -128,7 +128,6 @@
         document.getElementById("infoMSMiS").innerHTML = `
           <p><b>Version:</b> ${msm.version}</p>
           <p><b>Last Played:</b> Not provided.</p>
-          <p><b>Save ID:</b> ${msm.accountID}</p>
         `;
         document.getElementById("saveMSMiS").value = msm.full;
 
@@ -137,7 +136,6 @@
         document.getElementById("infoDOFiS").innerHTML = `
           <p><b>Version:</b> ${dof.version}</p>
           <p><b>Last Played:</b> ${convertDate(dof.lastDate)}</p>
-          <p><b>Save ID:</b> ${dof.accountID}</p>
         `;
         document.getElementById("saveDOFiS").value = dof.full;
 
