@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Create CloudSave</title>
   <link rel="stylesheet" href="/style.css">
-  <link rel="icon" href="/Logo_v4.ico" type="image/x-icon"> 
+  <link rel="icon" href="/Logo_v4.ico" type="image/x-icon">
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
   <div>
     <h1>Create CloudSave</h1>
 
-    <input id="username" placeholder="Enter your Scratch Username (or a different one if you fancy)"><br>
-    <input id="password" placeholder="Enter a UNIQUE Password (aka NOT your Scratch password!)" type="password"><br>
+    <input id="username" placeholder="Enter a Username (15 characters or less)"><br>
+    <input id="password" placeholder="Enter a UNIQUE Password" type="password"><br>
+    <br>
+    <center><div class="g-recaptcha" data-sitekey="6Le2UpssAAAAAIujAkKK_bCqmYPG4gQffiFXWtg7"></div></center><br>
     <button id="register">Register</button>
 
     <!-- Error display -->
@@ -40,6 +44,16 @@
         return;
       }
 
+      const captchaResponse = grecaptcha.getResponse();
+
+      if (!captchaResponse) {
+        errorDiv.innerText = "Please complete the CAPTCHA.";
+        return;
+      }
+      if (username.length > 15) {
+        errorDiv.innerText = "Username must be 15 characters or less.";
+          return;
+      }
       try {
         const email = username + "@maxiroon.xyz";
 
@@ -63,4 +77,5 @@
     };
   </script>
 </body>
+
 </html>

@@ -50,6 +50,12 @@
         return;
       }
 
+      const username = localStorage.getItem("username");
+
+      if (!username) {
+        window.location = "/account/login.html";
+      }
+
       try {
         await addDoc(collection(db, "bugReports"), {
           game: game,
